@@ -36,14 +36,13 @@ public class TaskTrackerController {
         tasks.remove(index);
         return new ApiResponse("Deleted task successfully");
     }
-    @PutMapping("/change-status/{index}")
-    public ApiResponse ChangeStatus(@PathVariable int index){
-       if(tasks.get(index).getStatus().equalsIgnoreCase("done")){
-          return new ApiResponse("task already done");
-       } else if (tasks.get(index).getStatus().equalsIgnoreCase("not done")) {
-           tasks.get(index).setStatus("done");
-       }
+  @PutMapping("/change-status/{index}/{status}")
+    public ApiResponse ChangeStatus(@PathVariable int index,@PathVariable String status){
+        if (index>tasks.size()) return new ApiResponse("task not found");
+ if(status.equalsIgnoreCase("done") &&  tasks.get(index).getStatus().equalsIgnoreCase("not done")){
+  tasks.get(index).setStatus(status);
 return  new ApiResponse("Changed status successfully");
+ } else return new ApiResponse("task already done ");
     }
 
 
